@@ -1,3 +1,3 @@
-# geomap
+# geoverview.js
 
-Based on [Maplibre](https://maplibre.org/), **geomap** is a tool to display very easily any **GEO**json (and the information it contains) on a **MAP**. Geomap is particularly suitable for working in [Observable](https://observablehq.com/).
+Based on [maplibre-gl](https://maplibre.org/), **geoverview** is a tool for giving a quick and easy geographic **overview** of any **geo**json (and the information it contains). Geoverview is particularly suitable for working in [Observable](https://observablehq.com/).

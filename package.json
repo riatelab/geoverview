@@ -1,18 +1,26 @@
 {
-  "name": "geomap",
+  "name": "geoverview",
   "version": "1.0.0",
-  "description": "Based on Maplibre, geomap is a tool to display very easily any geojson (and the information it contains) on a map.",
+  "description": "Based on Maplibre, geoverview is a tool to display very easily any geojson (and the information it contains) on a map.",
   "main": "src/index.js",
   "module": "src/index.js",
   "jsdelivr": "dist/index.min.js",
   "unpkg": "dist/index.min.js",
+  "exports": {
+    "umd": "./dist/index.min.js",
+    "default": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "dist"
+  ],  
   "scripts": {
     "build": "rollup --config",
     "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/neocarto/geomap.git"
+    "url": "git+https://github.com/neocarto/geoverview.git"
   },
   "keywords": [
     "geojson",
@@ -25,9 +33,9 @@
   "author": "Nicolas Lambert",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/neocarto/geomap/issues"
+    "url": "https://github.com/neocarto/geoverview/issues"
   },
-  "homepage": "https://github.com/neocarto/geomap#readme",
+  "homepage": "https://github.com/neocarto/geoverview#readme",
   "devDependencies": {
     "@rollup/plugin-babel": "^5.3.1",
     "@rollup/plugin-commonjs": "^22.0.0",
