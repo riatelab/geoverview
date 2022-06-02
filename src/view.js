@@ -353,7 +353,7 @@ export function* view(geojson, options = {}) {
   map.addControl(new maplibregl.NavigationControl(), "top-right");
   map.addControl(
     new maplibregl.AttributionControl({
-      customAttribution: `Made with <a href ="https://github.com/neocarto/geomap" target="_blank">geomap.js</a>`,
+      customAttribution: `Made with <a href ="https://github.com/neocarto/geoverview" target="_blank">geoverview.js</a>`,
       compact: false,
     })
   );
