@@ -2,25 +2,6 @@
 // view() is the main function. It returns the map to be displayed.
 // ****************************************************************
 
-// css
-
-const css = "https://unpkg.com/maplibre-gl@2.1.9/dist/maplibre-gl.css";
-document.head.innerHTML += `<link type="text/css" rel="stylesheet" href=${css}>`;
-const style = `<style>
-.mapboxgl-popup-content{overflow-y:scroll;max-height:250px;max-width:300px;padding:10px;border:black;font-family:Arial,Helvetica,sans-serif;font-size:15px;color:gray;}
-.mapboxgl-popup-contenttd{padding:3px;font-size:11px;font-family:Arial,Helvetica,sans-serif;color:#85817e;vertical-align:middle;}
-.rounded-rect{background:white;border-radius:10px;box-shadow:0050px-25pxblack;}
-.flex-center{position:absolute;display:flex;justify-content:center;align-items:center;}
-.flex-center.left{left:0px;}.sidebar-content{position:absolute;width:95%;height:535px;font-family:Arial,Helvetica,sans-serif;font-size:17px;color:gray;}
-.sidebar-contenttd{padding:3px;font-size:11px;font-family:Arial,Helvetica,sans-serif;color:#85817e;vertical-align:middle;}
-.tt{height:320px;display:block;overflow-y:scroll;}
-.sidebar-toggle{position:absolute;width:2em;height:2.3em;overflow:visible;display:flex;justify-content:center;align-items:center;overflow:hidden;}
-.sidebar-toggle.left{right:-1.5em;}.sidebar-toggle:hover{color:#0aa1cf;cursor:pointer;}
-.sidebar{transition:transform 1s;z-index:1;width:300px;height:100%;}
-.left.collapsed{transform:translateX(-295px);}
-</style>`;
-document.head.innerHTML += style;
-
 // imports
 
 import turfbbox from "@turf/bbox";
@@ -46,6 +27,104 @@ export function* view(geojson, options = {}) {
     const colOver = options.colOver ?? "#ffd505";
     const lineWidth = options.lineWidth;
 
+    // Unique id to allow you to put several maps on one page
+    const unique = Math.floor((1 + Math.random()) * 0x1000000000000)
+      .toString(16)
+      .substring(1);
+
+    // css
+
+    const css = "https://unpkg.com/maplibre-gl@2.1.9/dist/maplibre-gl.css";
+    document.head.innerHTML += `<link type="text/css" rel="stylesheet" href=${css}>`;
+    const style = `
+
+<style>
+
+.mapboxgl-popup-content{
+overflow-y:scroll;
+max-height:250px;
+max-width:300px;
+padding:10px;
+border:black;
+font-family:Arial,Helvetica,sans-serif;
+font-size:15px;
+color:gray;
+}
+
+.mapboxgl-popup-content td{
+padding:3px;
+font-size:11px;
+font-family:Arial,Helvetica,sans-serif;
+color:#85817e;
+vertical-align:middle;
+}
+
+.rounded-rect {
+background: white;
+border-radius: 10px;
+box-shadow: 0 0 50px -25px black;
+}
+
+.flex-center {
+position: absolute;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.flex-center.left {
+left: 0px;
+}
+
+.sidebar-content{
+position:absolute;
+width:95%;
+height:535px;
+font-family:Arial,Helvetica,sans-serif;
+font-size:17px;
+color:gray;
+}
+
+.tt{
+height:320px;
+display:block;
+overflow-y:scroll;
+}
+
+.sidebar-toggle {
+position: absolute;
+width: 2em;
+height: 2.3em;
+overflow: visible;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.sidebar-toggle.left {
+right: -1.5em;
+}
+
+.sidebar-toggle:hover {
+color: #0aa1cf;
+cursor: pointer;
+}
+
+.sidebar {
+transition: transform 1s;
+z-index: 1;
+width: 300px;
+height: 100%;
+}
+
+.left.collapsed${unique} {
+transform: translateX(-295px);
+}
+
+</style>
+`;
+    document.head.innerHTML += style;
+
     geojson.features.map((d, i) => (d.id = i + 1));
     let hovereId = null;
 
@@ -69,10 +148,10 @@ export function* view(geojson, options = {}) {
 
     let container = document.createElement("div");
     container.setAttribute("style", `width:${width}px;height:${height}px`);
-    container.innerHTML = `<div id="left" class="sidebar flex-center left collapsed">
+    container.innerHTML = `<div id="slidebar${unique}" class="sidebar flex-center left collapsed${unique}">
     <div class="sidebar-content rounded-rect flex-center">
     ${info(geojson_raw)}
-    <div class="sidebar-toggle rounded-rect left">&rarr;</div>
+    <div id = "toogle${unique}" class="sidebar-toggle rounded-rect left">&rarr;</div> 
     </div></div></div>`;
 
     yield container;
@@ -318,12 +397,12 @@ export function* view(geojson, options = {}) {
     function toggleSidebar(id) {
       var elem = document.getElementById(id);
       var classes = elem.className.split(" ");
-      var collapsed = classes.indexOf("collapsed") !== -1;
+      var collapsed = classes.indexOf(`collapsed${unique}`) !== -1;
 
       var padding = {};
 
       if (collapsed) {
-        classes.splice(classes.indexOf("collapsed"), 1);
+        classes.splice(classes.indexOf(`collapsed${unique}`), 1);
 
         padding[id] = 300;
         map.easeTo({
@@ -332,7 +411,7 @@ export function* view(geojson, options = {}) {
         });
       } else {
         padding[id] = 0;
-        classes.push("collapsed");
+        classes.push(`collapsed${unique}`);
 
         map.easeTo({
           padding: padding,
@@ -343,10 +422,34 @@ export function* view(geojson, options = {}) {
       elem.className = classes.join(" ");
     }
 
-    let slide = document.querySelector(".left");
+    // Test
+
+    // function open(id) {
+    //   map.easeTo({
+    //     padding: 300,
+    //     duration: 1000,
+    //   });
+    // }
+
+    // function close(id) {
+    //   map.easeTo({
+    //     padding: 300,
+    //     duration: 1000,
+    //   });
+    // }
+
+    // let slide = document.querySelector(`.left`);
+    // slide.addEventListener("click", function () {
+    //   toggleSidebar(`left`);
+    // });
+
+    let slide = document.querySelector(`#toogle${unique}, #slidebar${unique}`);
     slide.addEventListener("click", function () {
-      toggleSidebar("left");
+      toggleSidebar(`slidebar${unique}`);
     });
+
+    //console.log(style);
+    console.log(unique);
 
     // fullScreen & navigation
 
