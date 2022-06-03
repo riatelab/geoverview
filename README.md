@@ -12,7 +12,7 @@ It is very simple, geoverview contains only one function. In Observable, it is u
 
 ```js
 // Loading geoverview
-view = require("geoverview@latest").then((f) => f.view)
+view = require("geoverview@1.2").then((f) => f.view)
 ```
 
 ```js
