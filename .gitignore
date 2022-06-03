@@ -1,5 +1,7 @@
 # Node.js folders
 node_modules/
+
+# dist
 dist/
 
 # History files
