@@ -1,0 +1,13 @@
+<div id="observablehq-map1-db80a341"></div>
+<div id="observablehq-viewof-geojson-db80a341"></div>
+<p>Credit: <a href="https://observablehq.com/@neocartocnrs/geoverview">Quick and easy geojson geoverview by neocarto</a></p>
+
+<script type="module">
+import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+import define from "https://api.observablehq.com/@neocartocnrs/geoverview.js?v=3";
+new Runtime().module(define, name => {
+  if (name === "map1") return new Inspector(document.querySelector("#observablehq-map1-db80a341"));
+  if (name === "viewof geojson") return new Inspector(document.querySelector("#observablehq-viewof-geojson-db80a341"));
+  return ["map2"].includes(name);
+});
+</script>
