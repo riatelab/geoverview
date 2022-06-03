@@ -33,7 +33,22 @@ Live demo on this Observable [notebook](https://observablehq.com/@neocartocnrs/g
 
 ## Options
 
-xxx
+You can add some options like this:
+
+```js
+view(data, {width:800, renderWorldCopies:false})
+```
+
+Option list:
+
+- **width**: width of the map (default: 1000)
+- **height**: height of the map (default: 550)
+- **col**: Color of the displayed geojson (default: "#be82c2")
+- **fillOpacity**: fill opacity (default: 0.5)
+- **lineWidth**: line thickness (default 1 if point or polygon, 3 if line)
+- **colOver**: color when an object is hovered (default: "#ffd505")
+- **renderWorldCopies**: If true , multiple copies of the world will be rendered side by side beyond -180 and 180 degrees longitude (default: true)
+- **style**: basemap style: "night", "fulldark", "voyager","positron","icgc","osmbright","hibrid" (default: voyager)
 
 ## Things to fix/improve
 
