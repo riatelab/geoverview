@@ -1,6 +1,6 @@
 {
   "name": "geoverview",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Based on Maplibre, geoverview is a tool to display very easily any geojson (and the information it contains) on a map.",
   "main": "src/index.js",
   "module": "src/index.js",
