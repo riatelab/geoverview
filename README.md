@@ -29,7 +29,7 @@ Automatically, the map and your geojson will be displayed. So simple...
 
 ## Demo
 
-Live demo on this Observable [notebook](https://observablehq.com/@neocartocnrs/geoverview).
+Live demo on this [page](https://neocarto.github.io/geoverview) or this Observable [notebook](https://observablehq.com/@neocartocnrs/geoverview).
 
 ## Options
 
