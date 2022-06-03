@@ -24,8 +24,24 @@ export function* view(geojson, options = {}) {
     const height = options.height ?? 550;
     const radius = options.radius ?? 5;
     const fillOpacity = options.fillOpacity ?? 0.5;
+    const renderWorldCopies = options.renderWorldCopies ?? true;
     const colOver = options.colOver ?? "#ffd505";
     const lineWidth = options.lineWidth;
+    const basemap = options.style ?? "voyager";
+
+    // basemaps
+    const mapstyle = new Map([
+      ["night", "https://geoserveis.icgc.cat/contextmaps/night.json"],
+      ["fulldark", "https://geoserveis.icgc.cat/contextmaps/fulldark.json"],
+      [
+        "voyager",
+        "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+      ],
+      ["positron", "https://geoserveis.icgc.cat/contextmaps/positron.json"],
+      ["icgc", "https://geoserveis.icgc.cat/contextmaps/icgc.json"],
+      ["osmbright", "https://geoserveis.icgc.cat/contextmaps/osm-bright.json"],
+      ["hibrid", "https://geoserveis.icgc.cat/contextmaps/hibrid.json"],
+    ]);
 
     // Unique id to allow you to put several maps on one page
     const unique = Math.floor((1 + Math.random()) * 0x1000000000000)
@@ -76,17 +92,17 @@ align-items: center;
 left: 0px;
 }
 
-.sidebar-content{
+.sidebar-content${unique}{
 position:absolute;
 width:95%;
-height:535px;
+height:${height - 15}px;
 font-family:Arial,Helvetica,sans-serif;
 font-size:17px;
 color:gray;
 }
 
-.tt{
-height:320px;
+.tt${unique}{
+height:${height - 240}px;
 display:block;
 overflow-y:scroll;
 }
@@ -149,18 +165,19 @@ transform: translateX(-295px);
     let container = document.createElement("div");
     container.setAttribute("style", `width:${width}px;height:${height}px`);
     container.innerHTML = `<div id="slidebar${unique}" class="sidebar flex-center left collapsed${unique}">
-    <div class="sidebar-content rounded-rect flex-center">
-    ${info(geojson_raw)}
+    <div class="sidebar-content${unique} rounded-rect flex-center">
+    ${info(geojson_raw, unique)}
     <div id = "toogle${unique}" class="sidebar-toggle rounded-rect left">&rarr;</div> 
     </div></div></div>`;
 
     yield container;
     const map = (container.value = new maplibregl.Map({
       container,
-      style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+      style: mapstyle.get(basemap),
       scrollZoom: true,
       bounds: bb,
       attributionControl: false,
+      renderWorldCopies: renderWorldCopies,
     }));
 
     map.on("load", function () {
@@ -421,27 +438,6 @@ transform: translateX(-295px);
 
       elem.className = classes.join(" ");
     }
-
-    // Test
-
-    // function open(id) {
-    //   map.easeTo({
-    //     padding: 300,
-    //     duration: 1000,
-    //   });
-    // }
-
-    // function close(id) {
-    //   map.easeTo({
-    //     padding: 300,
-    //     duration: 1000,
-    //   });
-    // }
-
-    // let slide = document.querySelector(`.left`);
-    // slide.addEventListener("click", function () {
-    //   toggleSidebar(`left`);
-    // });
 
     let slide = document.querySelector(`#toogle${unique}, #slidebar${unique}`);
     slide.addEventListener("click", function () {
