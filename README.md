@@ -11,7 +11,7 @@ Based on [maplibre-gl](https://maplibre.org/), **geoverview** is a tool for givi
 It is very simple, geoverview contains only one function. In Observable, it is used in the following way. You need 3 cells:
 
 ```js
-// Loading geoverview
+// Load geoverview
 view = require("geoverview@1.2").then((f) => f.view)
 ```
 
@@ -21,7 +21,7 @@ data = FileAttachment("something.geojson").json()
 ```
 
 ```js
-// add a geojson (or topojson) file
+// and view
 view(data)
 ```
 
