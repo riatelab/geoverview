@@ -1,6 +1,10 @@
-# geoverview.js
 
-![npm](https://img.shields.io/npm/v/geoverview) ![license](https://img.shields.io/badge/license-MIT-success)
+![logo](img/geoverview.svg)
+
+![npm](https://img.shields.io/npm/v/geoverview)
+![jsdeliver](https://img.shields.io/jsdelivr/npm/hw/geoverview)
+![license](https://img.shields.io/badge/license-MIT-success)
+![code size](https://img.shields.io/github/languages/code-size/neocarto/geoverview)
 
 Based on [maplibre-gl](https://maplibre.org/), **geoverview** is a tool for giving a quick and easy geographic **overview** of any **geo**json (and the information it contains). Geoverview is particularly suitable for working within [Observable](https://observablehq.com/@neocartocnrs/geoverview).
 
