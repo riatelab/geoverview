@@ -19,15 +19,17 @@ export function* view(geojson, options = {}) {
   if (geojson) {
     const geojson_raw = geojson;
     geojson = topo2geo(geojson);
-    const width = options.width ?? 1000;
-    const col = options.col ?? "#be82c2";
-    const height = options.height ?? 550;
-    const radius = options.radius ?? 5;
-    const fillOpacity = options.fillOpacity ?? 0.5;
-    const renderWorldCopies = options.renderWorldCopies ?? true;
-    const colOver = options.colOver ?? "#ffd505";
+    const width = options.width != undefined ? options.width : 1000;
+    const col = options.col != undefined ? options.col : "#be82c2";
+    const height = options.height != undefined ? options.height : 550;
+    const radius = options.radius != undefined ? options.radius : 5;
+    const fillOpacity =
+      options.fillOpacity != undefined ? options.fillOpacity : 0.5;
+    const renderWorldCopies =
+      options.renderWorldCopies != undefined ? options.renderWorldCopies : true;
+    const colOver = options.colOver != undefined ? options.colOver : "#ffd505";
     const lineWidth = options.lineWidth;
-    const basemap = options.style ?? "voyager";
+    const basemap = options.style != undefined ? options.style : "voyager";
 
     // basemaps
     const mapstyle = new Map([
@@ -214,7 +216,7 @@ transform: translateX(-295px);
           },
           paint: {
             "line-color": col,
-            "line-width": lineWidth ?? 1,
+            "line-width": lineWidth != undefined ? lineWidth : 1,
           },
         });
       }
@@ -237,7 +239,7 @@ transform: translateX(-295px);
               colOver,
               col,
             ],
-            "line-width": lineWidth ?? 3,
+            "line-width": lineWidth != undefined ? lineWidth : 3,
           },
         });
       }
@@ -258,7 +260,7 @@ transform: translateX(-295px);
             ],
             "circle-stroke-color": col,
             "circle-opacity": fillOpacity,
-            "circle-stroke-width": lineWidth ?? 1,
+            "circle-stroke-width": lineWidth != undefined ? lineWidth : 1,
             "circle-radius": radius,
           },
         });
